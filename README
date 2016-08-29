@@ -1,0 +1,32 @@
+# Web Server Application components
+- nodejs
+  - express
+- angularjs
+
+# Image similarity algorithm
+- npm modules hamming-distance and imghash were used
+  https://www.npmjs.com/package/imghash
+
+# To run
+- get nodejs (nodejs.org/download)
+- at top level directory run "npm install"
+  (this will get all dependencies and populate node_modules directory)
+- at top level directory run "npm start"
+- open browser to http://localhost:3000
+- Click on top nav 'Home' to upload images.
+- Click 'Images' tab to view all images.
+- Click the 'View' button next to an image to view image and similar images if they exist.
+
+# Consideration
+- In 'Upload Image' page, there is currently no check for duplicate image file uploads.
+  - for production quality I would find an efficient way to find if the image has already
+    been uploaded. I would consider initial file.stat checks before doing an extensive
+    file comparison.
+- DB isn't currently being used so therefore similarity checks are done every time
+  in individual file view.
+  - for production, I would pick a document DB like mongoDB. Then each file will store file.stat
+    info and up to 3 similar images associated with it including the hamming-distance score.
+    The similarity info will be invoked in the background whenever a new image is uploaded. The
+    new image will be compared to all other images and will replace the record for existing
+    records only if the score is better than the one stored and will populate its own similarity
+    records as well.
